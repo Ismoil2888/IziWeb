@@ -1,152 +1,92 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Игра крестики-нолики</title>
+  <title>Крестики-нолики</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       text-align: center;
-      background: url("knnggpptt.jpg")
     }
+
     h1 {
-      margin-top: 50px;
-      backgound-color: yellow;
+      color: #333;
     }
+
     .board {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 50px;
-      background: white;
+      display: inline-block;
+      margin-top: 20px;
     }
+
     .cell {
-      display: flex;
+      width: 50px;
+      height: 50px;
+      border: 1px solid #ccc;
+      display: inline-flex;
       justify-content: center;
       align-items: center;
-      width: 110px;
-      height: 100px;
-      border: 2px solid teal;
-      font-size: 50px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-    .cell:hover {
-      background-color: #E6E6FA;
-    }
-    .cell.X {
-      color: #f44336;
-    }
-    .cell.O {
-      color: #2196f3;
-    }
-    .message {
-      margin-top: 50px;
       font-size: 24px;
-      font-weight: bold;
+      cursor: pointer;
     }
-    .domoypoydyomm {
-  display: inline-block;
-  text-decoration: none;
-  border: none;
-  border-radius: 5%;
-  background-color: #ff0000;
-  font-size: 16px;
-  text-align: center;
-  padding: 10px 10px;
-  color: aqua;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-  transition: background-color 0.3s ease;
-}
 
-.domoypoydyomm:hover {
-  background-color: blue;
-}
+    .cell:hover {
+      background-color: #f2f2f2;
+    }
+
+    .message {
+      margin-top: 20px;
+      color: #333;
+      font-size: 18px;
+    }
   </style>
 </head>
 <body>
-  <p style="display: inline-block; text-align: center; font-size: 50px; background: grey; color: gold; border-radius: 25px">IziWeb</p>
-  <h1 style="margin: 0; background: yellow; border-radius: 25px">Игра крестики-нолики</h1>
-  <div class="board"></div>
+  <h1>Крестики-нолики</h1>
+  <div class="board">
+    <div class="cell"></div>
+    <div class="cell"></div>
+    <div class="cell"></div>
+    <div class="cell"></div>
+    <div class="cell"></div>
+    <div class="cell"></div>
+    <div class="cell"></div>
+    <div class="cell"></div>
+    <div class="cell"></div>
+  </div>
   <div class="message"></div>
 
   <script>
-    var board = document.querySelector(".board");
-    var cells = [];
-    var currentPlayer = "X";
-    var gameOver = false;
+    // JavaScript код для игры "Крестики-нолики" с искусственным интеллектом
 
-    createBoard();
+    // Инициализация игрового поля
+    const board = document.querySelector('.board');
+    const cells = document.querySelectorAll('.cell');
+    const message = document.querySelector('.message');
+    let currentPlayer = 'X';
+    let gameActive = true;
 
-    function createBoard() {
-      for (var i = 0; i < 9; i++) {
-        var cell = document.createElement("div");
-        cell.classList.add("cell");
-        cell.addEventListener("click", makeMove);
-        cells.push(cell);
-        board.appendChild(cell);
-      }
-    }
+    // Функция для обработки хода игрока
+    function handleCellClick(e) {
+      const cell = e.target;
+      const cellIndex = Array.from(cells).indexOf(cell);
 
-    function makeMove() {
-      if (gameOver) return;
-
-      var index = cells.indexOf(this);
-
-      if (cells[index].innerHTML === "") {
-        cells[index].innerHTML = currentPlayer;
-        cells[index].classList.add(currentPlayer);
-
-        if (checkWin(currentPlayer)) {
-          gameOver = true;
-          showMessage("Игрок " + currentPlayer + " победил!");
-          return;
-        }
-
-        if (checkDraw()) {
-          gameOver = true;
-          showMessage("Ничья!");
-          return;
-        }
-
-        currentPlayer = currentPlayer === "X" ? "O" : "X";
-
-        if (currentPlayer === "O") {
-          makeAIMove();
-        }
-      }
-    }
-
-    function makeAIMove() {
-      var availableCells = cells.filter(function(cell) {
-        return cell.innerHTML === "";
-      });
-
-      var randomIndex = Math.floor(Math.random() * availableCells.length);
-      var cell = availableCells[randomIndex];
-      var index = cells.indexOf(cell);
-
-      setTimeout(function() {
-        cell.innerHTML = currentPlayer;
+      if (gameActive && cell.textContent === '') {
+        cell.textContent = currentPlayer;
         cell.classList.add(currentPlayer);
 
         if (checkWin(currentPlayer)) {
-          gameOver = true;
-          showMessage("Искусственный интеллект победил!");
-          return;
+          endGame(false);
+        } else if (checkDraw()) {
+          endGame(true);
+        } else {
+          currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+          makeComputerMove();
         }
-
-        if (checkDraw()) {
-          gameOver = true;
-          showMessage("Ничья!");
-          return;
-        }
-
-        currentPlayer = currentPlayer === "X" ? "O" : "X";
-      }, 500);
+      }
     }
 
+    // Функция для проверки победы
     function checkWin(player) {
-      var winningCombinations = [
+      const winningCombinations = [
         [0, 1, 2],
         [3, 4, 5],
         [6, 7, 8],
@@ -157,31 +97,55 @@
         [2, 4, 6]
       ];
 
-      return winningCombinations.some(function(combination) {
-        return combination.every(function(index) {
+      return winningCombinations.some(combination => {
+        return combination.every(index => {
           return cells[index].classList.contains(player);
         });
       });
     }
 
+    // Функция для проверки ничьи
     function checkDraw() {
-      return cells.every(function(cell) {
-        return cell.innerHTML !== "";
+      return Array.from(cells).every(cell => {
+        return cell.textContent !== '';
       });
     }
 
-    function showMessage(message) {
-      var messageElement = document.querySelector(".message");
-      messageElement.innerHTML = message;
+    // Функция для завершения игры
+    function endGame(draw) {
+      gameActive = false;
+      message.textContent = draw ? 'Ничья!' : `Игрок ${currentPlayer} победил!`;
     }
+
+    // Функция для хода компьютера
+    function makeComputerMove() {
+      if (!gameActive) return;
+
+      const availableCells = Array.from(cells).filter(cell => {
+        return cell.textContent === '';
+      });
+
+      const randomIndex = Math.floor(Math.random() * availableCells.length);
+      const randomCell = availableCells[randomIndex];
+
+      setTimeout(() => {
+        randomCell.textContent = currentPlayer;
+        randomCell.classList.add(currentPlayer);
+
+        if (checkWin(currentPlayer)) {
+          endGame(false);
+        } else if (checkDraw()) {
+          endGame(true);
+        } else {
+          currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        }
+      }, 500);
+    }
+
+    // Добавление обработчиков событий
+    cells.forEach(cell => {
+      cell.addEventListener('click', handleCellClick);
+    });
   </script>
-  
-  
-<button style="background-color: aqua;" onclick="location.reload( )">Начать заново</button></br></br><hr></br>
-
-
-<a href="index.html" class="domoypoydyomm"title="Домой">На главную старницу</a></br></br><hr>
-
-  
 </body>
 </html>
