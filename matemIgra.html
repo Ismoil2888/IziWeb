@@ -187,6 +187,13 @@ function endGame() {
 
 startRound();
 
+function openNumberKeyboard() {
+  var inputField = document.getElementById("answer");
+  inputField.type = "number";
+}
+
+document.getElementById("answer").addEventListener("click", openNumberKeyboard);
+
   </script>
 
 
