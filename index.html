@@ -1,112 +1,75 @@
 <!DOCTYPE html>
-
-<html lang="ru">
+<html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
-  <title>Login</title>
-  
+  <meta charset="UTF-8">
+  <title>Регистрация</title>
   <style>
-  
-  body {
-    background: url("kartinka/butyfone.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    height: 120vh;
-  }
-  
-  .zareg {
-  background-color: #FFF8DC;
-}
-  
-  .form0 {
-  size: ;
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 5px;
-  background-color: #00CED1;
-  border-radius: 50px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
-  background-size: 900px;
-}
-  
-  .select {
-    border: solid 5px;
-  }
-  
-#user_name {
-  border: solid 5px;
-  border-radius: 1rem;
-}
-#user_name0 {
-  border: solid 5px;
-  border-radius: 1rem;
-}
-#user_name1 {
-  border: solid 5px;
-  border-radius: 1rem;
-}
-#user_name2 {
-  border: solid 5px;
-  border-radius: 1rem;
-}
-#user_name5 {
-  border: solid 5px;
-  border-radius: 1rem;
-}
-  
+    .error {
+      color: red;
+    }
   </style>
-  
 </head>
 <body>
-
+  <h1>Регистрация</h1>
   
-<h4 style="color: green; font-size: 50px; text-align: center;"><u><b class="zareg">Зарегистрируйтесь на сайте <i style="background-color: grey; border-radius: 25px; color: gold">IziWeb</i></b></u></h4>
-
-<form class="form0" action="" method="post">
-
-    <p>Выберите свой уровень программирования:</p>
-   <select class="select">
-      <option disabled selected>----</option>
-      <option>Junior</option>
-      <option>Midle</option>
-      <option>Senyore</option>
-   </select><br><br>
-
-  <label for="user_name">Введите имя:</label><br>
-  <input type="text" placeholder="Поле для имени" maxlength="8" name="user_name" id="user_name"><br><br><br>
-
-  <label for="user_name0">Введите свой номер телефона:</label><br>
-  <input type="text" placeholder="Поле для номера" value="+992" maxlength="13" name="user_name0" id="user_name0"><br><br><br>
-
-  <label for="user_name1">Введите электронную почту:</label><br>
-  <input type="email" placeholder="Поле для электронной почты" id="user_name1"><br><br><br>
-
-  <label for="user_name2">Введите пароль:</label><br>
-  <input type="password" placeholder="Поле для пароля" id="user_name2"><br><br><br>
-
-  <label for="user_name5">Согласиться с условиями использования:</label>
-  <input type="checkbox" id="user_name5"><br><br>
-
-  <input type="reset" value="Очистить">
-  <input type="submit" value="Отправить"></br><br>
-  <a href="dizaynGpt.html">Войти как гость</a><br><br><hr><br>
-
-
-</form></br>
-
-<h5 style="color: red">В данный момент система регистрации находится в стадии разработки.</h5>
-
-  <button id="language-button">Сменить язык на таджикский</button>
+  <form id="registrationForm" onsubmit="registerUser(event)">
+    <label for="username">Имя пользователя:</label>
+    <input type="text" id="username" required>
+    <br>
+    
+    <label for="email">Email:</label>
+    <input type="email" id="email" required>
+    <br>
+    
+    <label for="password">Пароль:</label>
+    <input type="password" id="password" required>
+    <br>
+    
+    <button type="submit">Зарегистрироваться</button>
+  </form>
+  
+  <div id="errorMessage" class="error"></div>
   
   <script>
-var languageButton = document.getElementById("language-button");
-languageButton.addEventListener("click", function () {
-document.documentElement.lang = "tj"; // Устанавливаем язык страницы на таджикский
-document.getElementById("language-button").textContent = "Сменить язык на русский"; // Меняем текст кнопки
-});
-</script>
-  
+    function registerUser(event) {
+      event.preventDefault(); // Предотвращаем отправку формы
+      
+      var username = document.getElementById("username").value;
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("password").value;
+      
+      var errorMessage = document.getElementById("errorMessage");
+      
+      // Здесь вы можете добавить дополнительные проверки, например, проверку на уникальность имени пользователя или валидацию email
+      
+      // Отправка данных на сервер
+      // Вместо этого кода вам нужно будет написать код для отправки данных на ваш сервер для регистрации пользователя
+      // Здесь приведен пример использования fetch API для отправки данных на сервер
+      fetch("/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          username: username,
+          email: email,
+          password: password
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          errorMessage.textContent = ""; // Очищаем сообщение об ошибке
+          document.getElementById("registrationForm").reset(); // Очищаем форму
+          alert("Регистрация успешно завершена!");
+        } else {
+          errorMessage.textContent = data.message; // Выводим сообщение об ошибке, полученное с сервера
+        }
+      })
+      .catch(error => {
+        errorMessage.textContent = "Произошла ошибка при регистрации"; // Выводим общее сообщение об ошибке
+      });
+    }
+  </script>
 </body>
 </html>
