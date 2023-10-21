@@ -1,148 +1,202 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="description" content="Тестовый сайт">
-  <meta name="author" content="Хамидзода Исмоил">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Крестики-Нолики</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewporpt" content="width=device-width, initial-scale=1.0">
+ <title>Registration Form</title>
+ <link rel="stylesheet" href="style.css">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 100px;
-      background: url("kartinka/knnggpptt.jpg")
-    }
-
-    h1 {
-      font-size: 36px;
-      background-color: yellow;
-      border-radius: 25px;
-    }
-
-    .board {
-      display: inline-block;
-      border: 5px solid red;
-      border-radius: 50px;
-      margin-top: 20px;
-      background: white;
-    }
-
-    .board div {
-      display: inline-block;
-      width: 100px;
-      height: 100px;
-      border: 2px solid teal;
-      font-size: 72px;
-      line-height: 100px;
-      text-align: center;
-      cursor: pointer;
-    }
-
-    .message {
-      font-size: 24px;
-      margin-top: 20px;
-    }
   
-  .domoypoydyom {
-  display: inline-block;
-  text-decoration: none;
-  border: none;
-  border-radius: 5%;
-  background-color: #ff0000;
-  font-size: 16px;
-  text-align: center;
-  padding: 10px 10px;
-  color: aqua;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-  transition: background-color 0.3s ease;
+  * {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+font-family: 'Poppins', sans-serif;
 }
 
-.domoypoydyom:hover {
-  background-color: blue;
+section {
+display: flex;
+justify-content: center;
+align-items: center;
+width: 100%;
+height: 100vh;
+background: url('glavfone.jpg') no-repeat;
+background-size: cover;
+background-position: center;
+animation: animateBg 5s linear infinite;
 }
+
+@keyframes animateBg {
+    100% {
+         filter: hue-rotate(360deg);
+}
+}
+  
+  .login-box {
+position: relative;
+width: 400px;
+height: 450px;
+background: transparent;
+border: 2px solid rgba(255, 255, 255, .5);
+border-radius: 20px;
+display: flex;
+justify-content: center;
+align-items: center;
+backdrop-filter: blur(15px);
+}
+
+h2 {
+font-size: 2em;
+color: #fff;
+text-align: center;
+}
+  
+  .input-box {
+position: relative;
+width: 310px;
+margin: 30px 0;
+border-bottom: 2px solid #fff;
+}
+
+.input-box label {
+position: absolute;
+top: 50%;
+left: 5px;
+transform: translateY(-50%);
+font-size: 1em;
+color: #fff;
+pointer-events: none;
+transition: .5s;
+}
+
+.input-box input:focus~label, 
+.input-box input:valid~label { 
+   top: -5px;
+}
+  
+  .input-box input {
+width: 100%;
+height: 50px;
+background: transparent;
+border: none;
+outline: none;
+font-size: 1em;
+color: #fff;
+padding: 0 35px 0 5px;
+
+}
+
+.input-box .icon {
+position: absolute;
+right: 8px;
+color: #fff;
+font-size: 1.2em;
+line-height: 57px;
+}
+  
+  .remember-forgot { 
+margin: -15px 0 15px; 
+display: flex; 
+justify-content: space-between;
+font-size: .9em;
+color: #fff;
+}
+
+.remember-forgot label input { 
+  margin-right: 3px;
+}
+
+.remember-forgot a { 
+  color: #fff; text-decoration: none; 
+}
+  
+.remember-forgot a:hover { 
+  text-decoration: underline;
+}
+  
+  button {
+width: 100%;
+height: 40px;
+background: #fff;
+border: none;
+outline: none;
+border-radius: 40px;
+cursor: pointer;
+font-size: 1em;
+color: #000;
+font-weight: 500;
+}
+
+.register-link {
+font-size: .9em;
+color: #fff;
+text-align: center;
+margin: 25px 0 10px;
+}
+  
+  .register-link {
+color: #fff;
+font-size: .9em; text-align: center;
+margin: 25px 0 10px;
+}
+
+.register-link p a {
+color: #fff;
+text-decoration: none;
+font-weight: 600;
+}
+
+.register-link p a:hover { 
+  text-decoration: underline;
+}
+  
+  
+  
   </style>
 </head>
 <body>
-  <p style="margin: 0; display: inline-block; font-size: 50px; color: gold; background: grey; border-radius: 25px">IziWeb</p>
-  <h1>Крестики-нолики</h1>
-  <div class="board">
-    <div onclick="makeMove(0, 0)"></div>
-    <div onclick="makeMove(0, 1)"></div>
-    <div onclick="makeMove(0, 2)"></div>
-    <div onclick="makeMove(1, 0)"></div>
-    <div onclick="makeMove(1, 1)"></div>
-    <div onclick="makeMove(1, 2)"></div>
-    <div onclick="makeMove(2, 0)"></div>
-    <div onclick="makeMove(2, 1)"></div>
-    <div onclick="makeMove(2, 2)"></div>
-  </div>
-  <p class="message"></p>
-  </br></br>
-
-<button style="background-color: aqua;" onclick="location.reload( )">Начать заново</button></br></br><hr></br>
-
-<a href="hall.html" class="domoypoydyom"title="Домой">На главную старницу</a></br></br><hr>
-
-  <script>
-    var board = [
-      ['', '', ''],
-      ['', '', ''],
-      ['', '', '']
-    ];
-    var currentPlayer = 'X';
-    var moves = 0;
-
-    function makeMove(row, col) {
-      if (board[row][col] === '') {
-        board[row][col] = currentPlayer;
-        document.getElementsByClassName('board')[0].children[row * 3 + col].innerHTML = currentPlayer;
-        moves++;
-
-        if (checkWin(row, col)) {
-          document.getElementsByClassName('message')[0].innerHTML = 'Игрок ' + currentPlayer + ' победил!';
-          disableBoard();
-        } else if (moves === 9) {
-          document.getElementsByClassName('message')[0].innerHTML = 'Ничья!';
-        } else {
-          currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-        }
-      }
-    }
-
-    function checkWin(row, col) {
-      var symbol = currentPlayer === 'X' ? 'X' : 'O';
-
-      // Проверка по горизонтали
-      if (board[row][0] === symbol && board[row][1] === symbol && board[row][2] === symbol) {
-        return true;
-      }
-
-      // Проверка по вертикали
-      if (board[0][col] === symbol && board[1][col] === symbol && board[2][col] === symbol) {
-        return true;
-      }
-
-      // Проверка по диагонали (главная)
-      if (board[0][0] === symbol && board[1][1] === symbol && board[2][2] === symbol) {
-        return true;
-      }
-
-      // Проверка по диагонали (побочная)
-      if (board[0][2] === symbol && board[1][1] === symbol && board[2][0] === symbol) {
-        return true;
-      }
-
-      return false;
-    }
-
-    function disableBoard() {
-      var cells = document.getElementsByClassName('board')[0].children;
-
-      for (var i = 0; i < cells.length; i++) {
-        cells[i].onclick = null;
-      }
-    }
-  </script>
+  
+  <section>
+ <div class="login-box">
+  <form action="">
+   <h2>Registration</h2>
+    <div class="input-box">
+      <span class="icon">
+        <ion-icon name="person"></ion-icon>
+      </span>
+      <input type="text" maxlength="8" name="user_name" id="user_name" required>
+      <label for="user_name">Login</label>
+    </div>
+ <div class="input-box">
+     <span class="icon">
+       <ion-icon name="mail"></ion-icon>
+     </span>
+     <input type="email" required>
+     <label>Email</label>
+ </div>
+ <div class="input-box">
+     <span class="icon">
+      <ion-icon name="lock-closed"></ion-icon>
+     </span>
+     <input type="password" required>
+     <label>Password</label>
+ </div>
+    <div class="remember-forgot">
+    <label><input type="checkbox"> Remember me</label>
+    <a href="#">Forgot Password?</a>
+</div>
+<button type="submit">Register</button>
+<div class="register-link">
+  <p><a href="#">Войти как гость</a></p>
+</div>
+    
+ </form>
+ </div>
+  </section>
+    
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  
 </body>
 </html>
