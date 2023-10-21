@@ -4,9 +4,7 @@
   <meta charset="UTF-8">
   <title>Регистрация</title>
   <style>
-    .error {
-      color: red;
-    }
+    /* Стилизация формы и элементов */
   </style>
 </head>
 <body>
@@ -28,47 +26,49 @@
     <button type="submit">Зарегистрироваться</button>
   </form>
   
-  <div id="errorMessage" class="error"></div>
+  <div id="profile" style="display: none;">
+    <h2>Профиль пользователя</h2>
+    <p id="usernameDisplay"></p>
+    <p id="emailDisplay"></p>
+  </div>
   
   <script>
+    // JavaScript код будет здесь
     function registerUser(event) {
-      event.preventDefault(); // Предотвращаем отправку формы
-      
-      var username = document.getElementById("username").value;
-      var email = document.getElementById("email").value;
-      var password = document.getElementById("password").value;
-      
-      var errorMessage = document.getElementById("errorMessage");
-      
-      // Здесь вы можете добавить дополнительные проверки, например, проверку на уникальность имени пользователя или валидацию email
-      
-      // Отправка данных на сервер
-      // Вместо этого кода вам нужно будет написать код для отправки данных на ваш сервер для регистрации пользователя
-      // Здесь приведен пример использования fetch API для отправки данных на сервер
-      fetch("/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          username: username,
-          email: email,
-          password: password
-        })
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          errorMessage.textContent = ""; // Очищаем сообщение об ошибке
-          document.getElementById("registrationForm").reset(); // Очищаем форму
-          alert("Регистрация успешно завершена!");
-        } else {
-          errorMessage.textContent = data.message; // Выводим сообщение об ошибке, полученное с сервера
-        }
-      })
-      .catch(error => {
-        errorMessage.textContent = "Произошла ошибка при регистрации"; // Выводим общее сообщение об ошибке
-      });
+  event.preventDefault(); // Предотвращаем отправку формы
+  
+  var username = document.getElementById("username").value;
+  var email = document.getElementById("email").value;
+  var password = document.getElementById("password").value;
+  
+  // Здесь вы можете добавить дополнительные проверки, например, проверку на уникальность имени пользователя или валидацию email
+  
+  // Сохранение информации о пользователе
+  localStorage.setItem("username", username);
+  localStorage.setItem("email", email);
+  
+  // Очищаем форму
+  document.getElementById("registrationForm").reset();
+  
+  // Показываем профиль пользователя
+  showProfile();
+}
+
+function showProfile() {
+  var username = localStorage.getItem("username");
+  var email = localStorage.getItem("email");
+  
+  document.getElementById("usernameDisplay").textContent = "Имя пользователя: " + username;
+  document.getElementById("emailDisplay").textContent = "Email: " + email;
+  
+  // Скрываем форму регистрации и показываем профиль пользователя
+  document.getElementById("registrationForm").style.display = "none";
+  document.getElementById("profile").style.display = "block";
+}
+
+// Проверяем, есть ли сохраненная информация о пользователе
+if (localStorage.getItem("username") && localStorage.getItem("email")) {
+  showProfile();
     }
   </script>
 </body>
