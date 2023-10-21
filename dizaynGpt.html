@@ -1,178 +1,63 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="description" content="Тестовый сайт">
-  <meta name="author" content="Хамидзода Исмоил">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Дизайн сайта</title>
+  <meta charset="UTF-8">
+  <title>Вход</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-      margin: 0;
-      padding: 0;
-    }
-
-    header {
-      background-color: #333;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 36px;
-      margin: 0;
-    }
-
-    main {
-      max-width: 800px;
-      margin: 20px auto;
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-    p {
-      line-height: 1.5;
-    }
-
-    .button {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #333;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 5px;
-      transition: background-color 0.3s ease;
-    }
-
-    .button:hover {
-      background-color: #555;
-    }
-
-    footer {
-      background-color: #333;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-    }
-   .animation {
-      width: 100px;
-      height: 100px;
-      background-color: darkmagenta;
-      position: relative;
-      animation-name: move;
-      animation-duration: 2s;
-      animation-iteration-count: infinite;
-      animation-direction: alternate;
-    }
-
-    @keyframes move {
-      0% {
-        left: 0;
-        top: 0;
-      }
-      50% {
-        left: 200px;
-        top: 200px;
-      }
-      100% {
-        left: 0;
-        top: 0;
-      }
-      
-      #particles {
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
-      
-      
+    /* Стилизация формы и элементов */
   </style>
 </head>
 <body>
-  <header>
-    <h1>Мой сайт о программировании</h1>
-  </header>
-  <main>
-    <h2>Добро пожаловать!</h2>
-    <p>Здесь вы найдете множество полезной информации о программировании.</p>
-    <a href="hall.html" class="button">Узнать больше</a>
-  </main>
-  <footer>
-    &copy; 2023 Мой сайт о программировании. Все права защищены.
-  </footer><br><br><br><br>
-  <div class="animation"></div><br><br><br><br><br><br><br><br><br><br><br><br><hr>
+  <h1>Вход</h1>
   
-  <div class="fone">
-  
-  <canvas id="particles"></canvas>
-
-  <script>
-    // Создаем холст
-    var canvas = document.getElementById("particles");
-    var ctx = canvas.getContext("2d");
-
-    // Устанавливаем размеры холста
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    // Создаем массив для хранения частиц
-    var particles = [];
-
-    // Функция для создания частиц
-    function createParticle() {
-      var particle = {
-        x: canvas.width / 2, // начальная позиция по горизонтали
-        y: canvas.height / 2, // начальная позиция по вертикали
-        radius: Math.random() * 5 + 1, // случайный радиус частицы
-        color: "rgba(" + Math.floor(Math.random() * 256) + "," + Math.floor(Math.random() * 256) + "," + Math.floor(Math.random() * 256) + ",0.5)", // случайный цвет частицы
-        vx: Math.random() * 2 - 1, // случайная скорость по горизонтали
-        vy: Math.random() * 2 - 1 // случайная скорость по вертикали
-      };
-      return particle;
-    }
-
-    // Функция для обновления положения частиц
-    function update() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      for (var i = 0; i < particles.length; i++) {
-        var particle = particles[i];
-
-        // Обновляем положение частицы
-        particle.x += particle.vx;
-        particle.y += particle.vy;
-
-        // Рисуем частицу
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        ctx.fillStyle = particle.color;
-        ctx.fill();
-
-        // Проверяем, не вышла ли частица за пределы холста
-        if (particle.x < 0 || particle.x > canvas.width || particle.y < 0 || particle.y > canvas.height) {
-          particles.splice(i, 1); // удаляем частицу из массива
-          i--; // уменьшаем индекс, чтобы не пропустить следующую частицу
-        }
-      }
-
-      // Создаем новые частицы
-      while (particles.length < 100) {
-        particles.push(createParticle());
-      }
-
-      requestAnimationFrame(update);
-    }
-
-    // Запускаем анимацию
-    update();
-  </script>
+  <form id="loginForm" onsubmit="loginUser(event)">
+    <label for="username">Имя пользователя:</label>
+    <input type="text" id="username" required>
+    <br>
     
+    <label for="password">Пароль:</label>
+    <input type="password" id="password" required>
+    <br>
+    
+    <button type="submit">Войти</button>
+  </form>
+  
+  <div id="profile" style="display: none;">
+    <h2>Профиль пользователя</h2>
+    <p id="usernameDisplay"></p>
   </div>
   
+  <script>
+    // JavaScript код будет здесь
+    function loginUser(event) {
+  event.preventDefault(); // Предотвращаем отправку формы
+  
+  var username = document.getElementById("username").value;
+  var password = document.getElementById("password").value;
+  
+  // Здесь вы можете добавить проверку имени пользователя и пароля, например, сравнение с сохраненными данными
+  
+  // Очищаем форму
+  document.getElementById("loginForm").reset();
+  
+  // Показываем профиль пользователя
+  showProfile(username);
+}
+
+function showProfile(username) {
+  document.getElementById("usernameDisplay").textContent = "Имя пользователя: " + username;
+  
+  // Скрываем форму входа и показываем профиль пользователя
+  document.getElementById("loginForm").style.display = "none";
+  document.getElementById("profile").style.display = "block";
+}
+
+// Проверяем, есть ли сохраненная информация о пользователе
+if (localStorage.getItem("username")) {
+  var username = localStorage.getItem("username");
+  showProfile(username);
+}
+
+  </script>
 </body>
 </html>
