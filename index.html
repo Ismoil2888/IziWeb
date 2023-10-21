@@ -98,21 +98,15 @@
 
 <h5 style="color: red">В данный момент система регистрации находится в стадии разработки.</h5>
 
-  <button onclick="changeLanguage()">Переключить язык</button>
-
+  <button id="language-button">Сменить язык на таджикский</button>
+  
   <script>
-    function changeLanguage() {
-      var lang = document.documentElement.lang;
-      
-      if (lang === "tj") {
-        document.documentElement.lang = "tj";
-      } else {
-        document.documentElement.lang = "ru";
-      }
-      
-      location.reload(); // Перезагрузка страницы для применения изменений
-    }
-  </script>
+var languageButton = document.getElementById("language-button");
+languageButton.addEventListener("click", function () {
+document.documentElement.lang = "tg"; // Устанавливаем язык страницы на таджикский
+document.getElementById("language-button").textContent = "Сменить язык на русский"; // Меняем текст кнопки
+});
+</script>
   
 </body>
 </html>
