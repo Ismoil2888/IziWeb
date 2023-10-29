@@ -18,6 +18,7 @@
       position: absolute;
       top: 0;
       left: 0;
+      transition: transform 0.5s ease-in-out;
     }
     
     .page.active {
@@ -41,24 +42,23 @@
 <body>
   <div class="book">
     <div class="page active">
-      <div class="content">
+      <div class="content" contenteditable="true" oninput="savePage(currentPage)">
         <h1>Страница 1</h1>
         <p>Текст на странице 1.</p>
-        <div class="controls">
-          <button onclick="savePage(1)">Сохранить</button>
-        </div>
       </div>
     </div>
     <div class="page">
-      <div class="content">
+      <div class="content" contenteditable="true" oninput="savePage(currentPage)">
         <h1>Страница 2</h1>
         <p>Текст на странице 2.</p>
-        <div class="controls">
-          <button onclick="savePage(2)">Сохранить</button>
-        </div>
       </div>
     </div>
     <!-- Добавьте остальные страницы здесь -->
+  </div>
+  
+  <div class="controls">
+    <button onclick="previousPage()">Предыдущая</button>
+    <button onclick="nextPage()">Следующая</button>
   </div>
   
   <script>
